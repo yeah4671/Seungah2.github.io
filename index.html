@@ -1,0 +1,259 @@
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+<!--
+Created using JS Bin
+http://jsbin.com
+
+Copyright (c) 2024 by anonymous (http://jsbin.com/topunixoro/3/edit)
+
+Released under the MIT license: http://jsbin.mit-license.org
+-->
+<meta name="robots" content="noindex">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>것+것</title>
+  <link rel="stylesheet" href="style.css">
+
+<style id="jsbin-css">
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #ffffff;
+  color: #000;
+  font-family: 'Nanum Gothic', sans-serif;
+  height: 90%;
+  overflow: hidden;
+}
+
+.container {
+  width: 1080%; /* 화면 전체 너비 */
+  max-width: 9000px;
+  text-align: center;
+  position: relative;
+  min-height: -150%; /* 화면 전체 높이를 설정 */
+  background: linear-gradient(to bottom, 
+              rgba(255, 255, 255, 1) 10%, 
+              rgba(255, 0, 0, 0.5) 50%, 
+              rgba(255, 255, 255, 1) 90%); /* 그라데이션 비율 수정 */
+  transition: background 0.5s ease; /* 부드러운 변화 */
+}
+
+.main-text {
+  font-size: 1rem;
+  font-weight: Medium;
+  margin-bottom: 390px;
+  margin-top: 150px;
+  color: #333;
+}
+
+.main-tex {
+  font-size: 1rem;
+  font-weight: Medium;
+  margin-bottom: 10px;
+  margin-top: 240px;
+  color: #333;
+}
+
+.text-overlay {
+  position: relative;
+}
+
+.interactive-text {
+  font-size: 1.2rem;
+  line-height: 1.8;
+  margin-bottom: 20px;
+  opacity: 5;
+  transition: opacity 3s ease, transform 3s ease, filter 3s ease;
+  filter: blur(0px);
+  cursor: pointer;
+}
+
+.interactive-text.blurred {
+  opacity: 0.3;
+  filter: blur(7px);
+  transform: scale(0.8) rotate(-5deg); /* 크기 축소 및 기울기 추가 */
+  pointer-events: none;
+}  
+
+.final-message {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-top: 5px;
+  color: rgba(0, 0, 0, 0.8);
+  opacity: 0;
+  transition: opacity 2s ease-in-out;
+}
+
+.final-message.visible {
+  opacity: 1; /* 메시지가 나타남 */
+}
+
+.container {
+  width: 100%;
+  max-width: 8000px;
+  text-align: center;
+  position: relative;
+  height: 110vh; /* 화면 전체 높이 */
+  background: linear-gradient(to right, rgba(255, 255, 255, 1) 40%, rgba(255, 0, 0, 0.5) 50%, rgba(255, 255, 255, 1) 60%);
+  transition: background 0.5s ease; /* 부드러운 변화 */
+}
+
+.container.clicked {
+  background: radial-gradient(circle, rgba(255, 0, 0, 0.5) 20%, rgba(0, 255, 0, 0.4) 40%, rgba(0, 0, 255, 0.3) 60%);
+  transition: background 1s ease-in-out;
+}
+
+.reset-trigger {
+color: #ff3333; /* 강조 색상 */
+font-weight: bold;
+cursor: pointer;
+text-decoration: underline;
+transition: color 0.3s ease;
+}
+
+.reset-trigger:hover {
+color: #cc0000; /* 마우스 오버 시 색상 변화 */
+}
+
+.text-overlay {
+  opacity: 0;
+  transform: scale(0.8);
+  animation: fadeInText 5s forwards ease-in-out;
+}
+
+@keyframes fadeInText {
+  to {
+      opacity: 1;
+      transform: scale(1);
+  }
+}
+</style>
+</head>
+<body>
+  <div class="container">
+    <h1 class="main-text">보여지는 것</h1>
+    <div class="text-overlay">
+      <p class="interactive-text">처음엔 글이었다.</p> 
+      <p class="interactive-text">짧고 굵고 길고 얇은 획들이 만나 글자가 하나의 되었고, 그 글자는 쉽게 읽히는 명확한 형태였다.</p>
+      <p class="interactive-text">분명한 의미를 가졌고, 눈에 뚜렷이 보였다. </p>
+      <p class="interactive-text">그러나 문장이 하나둘씩 쌓일 때마다 의미는 시선이 따라 달라지기 시작했다.</p>
+      <p class="interactive-text">글자는 고정된 자리에 머무르지 못한 채,</p>
+      <p class="interactive-text">그곳에서 더 깊이 파고들거나 흔들리며 새로운 해석을 품게 되었다.</p> 
+      <p class="interactive-text">단어 위에 새로운 색과 무게가 쌓였고, 의미는 점차 길을 잃었다.</p>
+      <p class="interactive-text">글은 흔들리며, 형태를 잃고 무너지기 시작했다.</p> 
+      <p class="interactive-text">의미는 사라졌지만 흔적만은 남았있다.</p>
+      <p class="interactive-text">그 흔적은 새로운 눈길과 해석을 기다리며</p>
+
+    </div>
+    <div class="final-message hidden">
+  흔적은 또 <span class="reset-trigger">다른</span> 글을 요구한다.
+</div>
+
+    <h1 class="main-tex">읽혀지는 것</h1>
+
+  </div>
+  <script src="script.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const container = document.querySelector('.container');
+  const textElements = Array.from(document.querySelectorAll('.interactive-text'));
+  const finalMessage = document.querySelector('.final-message');
+  const resetTrigger = document.querySelector('.reset-trigger');
+  const textOverlay = document.querySelector('.text-overlay');
+
+  let completedCount = 0;
+  let gradientStart = 40; // 초기 시작 위치 (%)
+  let gradientEnd = 60;   // 초기 끝 위치 (%)
+
+  // 배열 셔플 함수
+  const shuffleArray = (array) => {
+    const shuffled = [...array];
+    for (let i = shuffled.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+    return shuffled;
+  };
+
+  // 텍스트 재배치 함수
+  const rearrangeText = () => {
+    const shuffledTexts = shuffleArray(textElements);
+
+    // 기존 텍스트를 모두 제거하고 새로운 순서로 추가
+    textOverlay.innerHTML = '';
+    shuffledTexts.forEach((text) => {
+      textOverlay.appendChild(text);
+      text.classList.remove('blurred'); // 초기 상태로 복원
+    });
+  };
+
+  // 텍스트 클릭 이벤트
+  textElements.forEach((text) => {
+    text.addEventListener('click', () => {
+      text.classList.add('blurred');
+      completedCount++;
+
+      // 클릭할 때마다 그래디언트 확장
+      gradientStart -= 5; // 왼쪽 확장
+      gradientEnd += 5;   // 오른쪽 확장
+      container.style.background = `linear-gradient(
+        to right,
+        rgba(255, 255, 255, 1) ${gradientStart}%,
+        rgba(255, 0, 0, 0.5) 50%,
+        rgba(255, 255, 255, 1) ${gradientEnd}%
+      )`;
+
+      // 모든 텍스트가 흐려지면 최종 메시지 표시
+      if (completedCount === textElements.length) {
+        setTimeout(() => {
+          finalMessage.classList.add('visible');
+        }, 1000); // 최종 메시지 딜레이
+      }
+    });
+  });
+
+  // "다른" 클릭 이벤트
+  resetTrigger.addEventListener('click', () => {
+    // 그래디언트 초기화
+    gradientStart = 40;
+    gradientEnd = 60;
+    container.style.background = `linear-gradient(
+      to right,
+      rgba(255, 255, 255, 1) ${gradientStart}%,
+      rgba(255, 0, 0, 0.5) 50%,
+      rgba(255, 255, 255, 1) ${gradientEnd}%
+    )`;
+
+    // 최종 메시지 숨김
+    finalMessage.classList.remove('visible');
+    completedCount = 0;
+
+    // 텍스트 재배치
+    rearrangeText();
+  });
+});
+</script>
+<script src="https://static.jsbin.com/js/render/edit.js?4.1.8"></script>
+<script>jsbinShowEdit && jsbinShowEdit({"static":"https://static.jsbin.com","root":"https://jsbin.com"});</script>
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-1656750-34', 'auto');
+ga('require', 'linkid', 'linkid.js');
+ga('require', 'displayfeatures');
+ga('send', 'pageview');
+
+</script>
+
+</body>
+</html>
